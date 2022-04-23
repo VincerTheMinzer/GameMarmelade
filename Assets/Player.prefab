@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1758821654230900162}
   - component: {fileID: 1758821654230900165}
   - component: {fileID: 1758821654230900164}
-  - component: {fileID: 455593947920488747}
+  - component: {fileID: 1013735534158511568}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -112,10 +112,10 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!114 &455593947920488747
+  m_CollisionDetection: 3
+--- !u!114 &1013735534158511568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,19 +124,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1758821654230900167}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f66a95f537751764a8f217a3b30071e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b0f80842de8b3f4fa6ad0e7aeaee24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MyCameraGO: {fileID: 0}
   MyCameraTrans: {fileID: 0}
-  _groundCheckDistance: 0.2
+  _groundCheckDistance: 0.3
   IsGrounded: 1
   Foot: {fileID: 282370129629451479}
   _walkSpeed: 6
   _acceleration: 4
   _currentMovementLerpSpeed: 100
-  _breakSpeed: 1
-  _jumpForce: 12
+  _breakSpeed: 2
+  _jumpForce: 15
   _fallMultiplier: 7
   _jumpVelocityFalloff: 8
   _enableDoubleJump: 1

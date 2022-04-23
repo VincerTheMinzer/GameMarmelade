@@ -31,8 +31,7 @@ public class MySpecialMovement : MonoBehaviour
 
         HandleJumping();
 
-        Debug.Log(_inputs.X + ", " + _rb.velocity + ", " + IsGrounded);
-        //ApplySpeed();
+        //Debug.Log(_inputs.X + ", " + _rb.velocity + ", " + IsGrounded);
     }
 
     #region Movement
@@ -54,8 +53,6 @@ public class MySpecialMovement : MonoBehaviour
         //Debug.DrawLine(Foot.position + (Vector3.up * 0.1f), Foot.position + (Vector3.up * 0.1f) + (Vector3.down * _groundCheckDistance));
         bool grounded = Physics.Raycast(Foot.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, _groundCheckDistance);
 
-        //Debug.Log("grounded: " + grounded);
-        //Debug.Log("IsGrounded: " + IsGrounded);
 
         if (!IsGrounded && grounded)
         {
@@ -156,68 +153,4 @@ public class MySpecialMovement : MonoBehaviour
     }
 
     #endregion
-
-    /*
-    #region Vincent
-    public float maxSpeed = 5;
-    public float AddSpeed = 0.5f;
-    public float breakSpeed = 0.2f;
-    float curSpeed = 0;
-
-    private float breakpercent = 0;
-
-   
-    Vector3 controllerInput = Vector3.zero;
-    Vector3 moveDir = Vector3.zero;
-    Vector3 curMoveDir = Vector3.zero;
-    bool hadPlayerInput = false;
-    bool setupcomplete = false;
-
-    private void checkInput()
-    {
-        hadPlayerInput = false;
-
-        // Move right direction
-        if (Input.GetKey(KeyCode.D))
-        {
-            if (_rb.velocity.x < 0)
-
-                controllerInput += transform.forward * (AddSpeed * Time.deltaTime);
-            hadPlayerInput = true;
-        }
-        // Move left direction
-        else if (Input.GetKey(KeyCode.A))
-        {
-            if (_rb.velocity.x < 0)
-
-                controllerInput -= transform.forward * (AddSpeed * Time.deltaTime);
-            hadPlayerInput = true;
-        }
-    }
-
-    private void ApplySpeed()
-    {
-        if (!hadPlayerInput)
-        {
-            if(!setupcomplete)
-                moveDir = controllerInput;
-
-            curMoveDir = Vector3.Lerp(moveDir, Vector3.zero, Mathf.Clamp(breakpercent += (breakSpeed * Time.deltaTime), 0, 1));
-            controllerInput = curMoveDir;
-            setupcomplete = true;
-            curSpeed -= breakSpeed;
-        }
-        else
-        {
-            setupcomplete = false;
-            breakpercent = 0;
-            curSpeed += AddSpeed;
-            curMoveDir = controllerInput;
-        }
-
-        _rb.velocity = curMoveDir;
-    }
-    #endregion
-    */
-
 }
