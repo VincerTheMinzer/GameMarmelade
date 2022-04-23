@@ -17,10 +17,11 @@ public class CameraMovement : MonoBehaviour
         StartCoroutine(MoveCamera());
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SwitchIsActive()
     {
-        
+        isActive = !isActive;
+        if (isActive)
+            StartCoroutine(MoveCamera());
     }
 
     IEnumerator MoveCamera() {
