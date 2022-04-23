@@ -15,7 +15,16 @@ public class ObjectPlacement : MonoBehaviour
     public float PreviewScale;
     public Transform PreviewTransform;
 
-    
+
+    [Header("Audio")]
+    public List<AudioClip> insults;
+    [Range(0f, 1f)]
+    public float InsultRate;
+    public AudioClip warning;
+
+
+
+
 
     // placeable following the Cursor
     private GameObject currentPlaceable;
@@ -68,6 +77,17 @@ public class ObjectPlacement : MonoBehaviour
             }
             else {
                 Debug.Log("Ihr könnt das nicht dort platzieren, Mylord");
+
+                AudioSource audioData = GetComponent<AudioSource>();
+                float selectPlaylist = Random.Range(0f, 1f);
+                if (selectPlaylist <= InsultRate)
+                {
+                    audioData.clip = insults[Random.Range(0, insults.Count)];
+                }
+                else {
+                    audioData.clip = warning;
+                }
+                audioData.Play(0);
             }
         }
     }
