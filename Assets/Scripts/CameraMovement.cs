@@ -8,7 +8,26 @@ public class CameraMovement : MonoBehaviour
     public float tickTime = 0.05f;
     public bool isActive = true;
 
-    public Transform cameraPosition; 
+    public float CamSpeedIncreaseInPercent = 5;
+    public float[] EverySeconds = new float[5] { 1, 5, 5, 10, 20 };
+
+    public Transform cameraPosition;
+
+    public bool IncreaseSpeedOn = true;
+
+    IEnumerator IncreaseSpeedOverTime()
+    {
+        int curSpeed = 0;
+
+        while (IncreaseSpeedOn)
+        {
+            movementSpeed += movementSpeed*(CamSpeedIncreaseInPercent*0.01f);
+            yield return new WaitForSeconds(EverySeconds[curSpeed]);
+            if(curSpeed < EverySeconds.Length-1)
+                curSpeed++;
+        }
+        yield break;
+    }
 
     // Start is called before the first frame update
     void Start()
