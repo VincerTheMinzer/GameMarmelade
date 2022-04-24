@@ -18,10 +18,13 @@ public class CameraMovement : MonoBehaviour
     IEnumerator IncreaseSpeedOverTime()
     {
         int curSpeed = 0;
+        MySpecialMovement msm = GameObject.FindGameObjectWithTag("Player").GetComponent<MySpecialMovement>();
 
         while (IncreaseSpeedOn)
         {
-            movementSpeed += movementSpeed*(CamSpeedIncreaseInPercent*0.01f);
+            float increaseSpeedBy = movementSpeed * (CamSpeedIncreaseInPercent * 0.01f);
+            movementSpeed += increaseSpeedBy;
+            msm.IncreaseSpeedBy(increaseSpeedBy);
             yield return new WaitForSeconds(EverySeconds[curSpeed]);
             if(curSpeed < EverySeconds.Length-1)
                 curSpeed++;
@@ -34,6 +37,7 @@ public class CameraMovement : MonoBehaviour
     {
         cameraPosition = Camera.main.transform;
         StartCoroutine(MoveCamera());
+        StartCoroutine(IncreaseSpeedOverTime());
     }
 
     public void SwitchIsActive()
@@ -43,11 +47,13 @@ public class CameraMovement : MonoBehaviour
             StartCoroutine(MoveCamera());
     }
 
+   
+
     IEnumerator MoveCamera() {
         while(isActive)
         {
+            yield return new WaitForFixedUpdate();
             cameraPosition.position = cameraPosition.position + cameraPosition.right * movementSpeed;
-            yield return new WaitForSeconds(tickTime);
         }
         yield break;
     }

@@ -67,6 +67,11 @@ public class MySpecialMovement : MonoBehaviour
         UpdateAnimator(move);
     }
 
+    public void IncreaseSpeedBy(float spd)
+    {
+        _walkSpeed += spd;
+    }
+
     public void die()
     {
         GameObject myres = Instantiate(Respawn, Camera.main.transform);
