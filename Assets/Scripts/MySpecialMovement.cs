@@ -74,6 +74,10 @@ public class MySpecialMovement : MonoBehaviour
 
     public void die()
     {
+<<<<<<< Updated upstream
+=======
+        GetComponent<Health>().DamagePlayer(100);
+>>>>>>> Stashed changes
         GameObject myres = Instantiate(Respawn, Camera.main.transform);
         transform.position = myres.transform.GetChild(0).position;
         myres.transform.parent = null;
