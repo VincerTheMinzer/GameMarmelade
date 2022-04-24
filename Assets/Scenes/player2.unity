@@ -812,8 +812,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeables:
   - {fileID: 4789796594686592800, guid: 154a482994f181740b28d86302d2a0e9, type: 3}
+  - {fileID: 3737097199895593315, guid: 6a827e9bdf7473c49b79b760fbbb3ecd, type: 3}
+  - {fileID: 7866550487324929717, guid: 9749629b581efb84b8d0b983824f1b57, type: 3}
   items:
   - {fileID: 4789796594686592800, guid: 154a482994f181740b28d86302d2a0e9, type: 3}
+  - {fileID: 3737097199895593315, guid: 6a827e9bdf7473c49b79b760fbbb3ecd, type: 3}
   ItemRate: 0.187
   PreviewScale: 0.07
   PreviewTransform: {fileID: 234720145}
