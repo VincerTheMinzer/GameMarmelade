@@ -18,6 +18,6 @@ public class Placeable : MonoBehaviour
 
     public void Place() {
         Debug.Log("Placed");
-        GetComponent<ParticleSystem>().Play();
+        transform.GetChild(0).GetComponent<ParticleSystem>().Play();
     }
 }

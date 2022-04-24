@@ -62,12 +62,12 @@ public class ObjectPlacement : MonoBehaviour
         {
             Debug.Log("Pressed left click.");
 
-            if (currentPlaceable.GetComponent<PlacementCollision>().collisions == 0)
+            if (currentPlaceable.transform.GetChild(0).GetComponent<PlacementCollision>().collisions == 0)
             {
                 // detach currentPlaceable from Cursor and trigger effects
                 currentPlaceable.transform.parent = null;
                 currentPlaceable.layer = 0;
-                currentPlaceable.GetComponent<Placeable>().Place();
+                currentPlaceable.transform.GetChild(0).GetComponent<Placeable>().Place();
 
                 // attach nextPlaceable to Cursor
                 currentPlaceable = nextPlaceable;
@@ -112,8 +112,8 @@ public class ObjectPlacement : MonoBehaviour
         int id = Random.Range(0, collection.Count);
         GameObject placeable = Instantiate(collection[id]);
         
-        Color color = new Color(Random.Range(0F, 1F), Random.Range(0, 1F), Random.Range(0, 1F));
-        placeable.GetComponent<Renderer>().material.color = color;
+        //Color color = new Color(Random.Range(0F, 1F), Random.Range(0, 1F), Random.Range(0, 1F));
+        //placeable.GetComponent<Renderer>().material.color = color;
         
         placeable.layer = 5;
         placeable.transform.localScale *= PreviewScale;
