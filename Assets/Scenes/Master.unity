@@ -998,7 +998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1315.0001, y: -50}
+  m_AnchoredPosition: {x: 1315, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1057842894
@@ -1687,11 +1687,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placeables:
-  - {fileID: 8272462790504246686, guid: 742ea765a1b58594593a6c77f8d9ee70, type: 3}
-  - {fileID: 6811056360051810078, guid: 9972116c582f81f4e86db68b26ceb43d, type: 3}
+  - {fileID: 4789796594686592800, guid: 154a482994f181740b28d86302d2a0e9, type: 3}
   items:
-  - {fileID: 7960695426901166932, guid: 7e77db3c5c0b5ed44a44f18a7b255a59, type: 3}
-  - {fileID: 1211175718179378438, guid: 3b6db53b10f0641499a2a8291032deb0, type: 3}
+  - {fileID: 4789796594686592800, guid: 154a482994f181740b28d86302d2a0e9, type: 3}
   ItemRate: 0
   PreviewScale: 0.0268
   PreviewTransform: {fileID: 234720145}

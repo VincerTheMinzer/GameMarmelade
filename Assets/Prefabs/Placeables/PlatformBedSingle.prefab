@@ -352,15 +352,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalPosition.x
@@ -376,23 +376,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -406,6 +406,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlacementParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 5173689560522376178, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
+      propertyPath: ShapeModule.m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: c3d60277163643545894075b59720264, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
 --- !u!4 &411065195636716565 stripped
