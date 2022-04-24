@@ -816,7 +816,7 @@ MonoBehaviour:
   items:
   - {fileID: 7960695426901166932, guid: 7e77db3c5c0b5ed44a44f18a7b255a59, type: 3}
   - {fileID: 1211175718179378438, guid: 3b6db53b10f0641499a2a8291032deb0, type: 3}
-  ItemRate: 0.3
+  ItemRate: 0
   PreviewScale: 0.07
   PreviewTransform: {fileID: 234720145}
   insults:
@@ -840,7 +840,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d76caf5cf84f5c746a3c375cd19f9980, type: 3}
   - {fileID: 8300000, guid: 480c094c7d7d8eb41a96e6113090d2d8, type: 3}
   - {fileID: 8300000, guid: c19860698880f6b498167a3b8205394b, type: 3}
-  InsultRate: 0.1
+  InsultRate: 0.241
   warning: {fileID: 8300000, guid: af47ec7641de6e54b84fd4db6e8d76a3, type: 3}
 --- !u!4 &1925653506
 Transform:

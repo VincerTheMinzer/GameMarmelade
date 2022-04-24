@@ -65,7 +65,7 @@ public class ObjectPlacement : MonoBehaviour
                 // detach currentPlaceable from Cursor and trigger effects
                 currentPlaceable.transform.parent = null;
                 currentPlaceable.layer = 0;
-                //currentPlaceable.GetComponent<SuperPlaceScript>().place();
+                currentPlaceable.GetComponent<Placeable>().Place();
 
                 // attach nextPlaceable to Cursor
                 currentPlaceable = nextPlaceable;
