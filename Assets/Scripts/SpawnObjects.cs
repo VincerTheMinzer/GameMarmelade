@@ -10,6 +10,11 @@ public class SpawnObjects : MonoBehaviour
     public float noiseStepSize = 0.1f;
 
     public List<GameObject> preBuiltObstacles;
+    [Range(0, 1)]
+    public float chanceThatTilesAreMissing = 0.3f;
+    [Range(0, 1)]
+    public float maxPercentOfMissingTiles = 0.5f;
+
     private List<GameObject> instantiatedObjects;
     public GameObject curRightMostObject;
 
@@ -71,10 +76,51 @@ public class SpawnObjects : MonoBehaviour
         float distance = Vector3.Distance(Camera.main.ScreenToWorldPoint(ScreenTop), Camera.main.ScreenToWorldPoint(ScreenBot));
         float newScreenPos = (distance / 2) * mappedValue;
         Vector3 resVec = new Vector3(SpawnPos.x, newScreenPos, SpawnPos.z);
+
         curRightMostObject = Instantiate(preBuiltObstacles[SpawnNr], resVec, Quaternion.identity);
         instantiatedObjects.Add(curRightMostObject);
+
+        var newObj = curRightMostObject;
+        int numberOfElements = newObj.transform.Find("Elements").transform.childCount;
+        
+        List<int> alreadyRemoved = new List<int>();
+
+        if (Random.Range(0f, 1f) <= chanceThatTilesAreMissing) 
+        {
+            Debug.Log("Yees");
+            Debug.Log("Number of Elements: " + numberOfElements);
+
+            int maxItemsToRemove = Mathf.RoundToInt(numberOfElements * maxPercentOfMissingTiles);
+            Debug.Log("Max Items to remove: " + maxItemsToRemove);
+            int itemsToRemove = Random.Range(0, maxItemsToRemove + 1);
+            Debug.Log("Items to remove: " + itemsToRemove);
+
+            while(itemsToRemove > 0)
+            {
+                int childNumber = RandomRangeExcept(0, numberOfElements, alreadyRemoved);
+                Debug.Log("Child number: " + childNumber + " , Already Removed: " + alreadyRemoved.Count);
+
+                alreadyRemoved.Add(childNumber);
+
+                newObj.transform.Find("Elements").transform.GetChild(childNumber).gameObject.SetActive(false);
+
+                itemsToRemove--;
+            }
+        } else
+        {
+            Debug.Log("nope");
+        }
+        
         noiseOffsetX += noiseStepSize;
         return curRightMostObject;
+    }
+
+    private int RandomRangeExcept(int min, int max, List<int> except){
+        var number = 0;
+        do {
+                number = Random.Range(min, max);
+        } while (except.Contains(number)) ;
+        return number;
     }
 
     // Update is called once per frame

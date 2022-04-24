@@ -947,6 +947,8 @@ MonoBehaviour:
   - {fileID: 3583702033116257190, guid: d01fb8e5416efeb47aa854b34f67596d, type: 3}
   - {fileID: 6078626106302254196, guid: 66056a39fe3742741bcce1346116ccc4, type: 3}
   - {fileID: 8980881598753926832, guid: 7213970898ac90f48b355ab6c11d15b5, type: 3}
+  chanceThatTilesAreMissing: 0.75
+  maxPercentOfMissingTiles: 0.75
   curRightMostObject: {fileID: 0}
   myPrefab1: {fileID: 0}
   cm: {fileID: 1250523425}
@@ -998,7 +1000,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1315.0001, y: -50}
+  m_AnchoredPosition: {x: 1315, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1057842894
@@ -1912,7 +1914,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -62.70999}
+  m_AnchoredPosition: {x: 0, y: -62.70996}
   m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2080054653
