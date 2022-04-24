@@ -90,8 +90,8 @@ public class MySpecialMovement : MonoBehaviour
 
     public void IncreaseSpeedBy(float spd)
     {
-        _walkSpeed *= spd * 0.5f;
-        _acceleration *= spd * 0.5f;
+        _walkSpeed *= spd;
+        _acceleration *= spd;
     }
 
     public void die()

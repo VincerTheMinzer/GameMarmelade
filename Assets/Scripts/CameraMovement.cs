@@ -24,7 +24,7 @@ public class CameraMovement : MonoBehaviour
         {
             float increaseSpeedBy = movementSpeed * (CamSpeedIncreaseInPercent * 0.01f);
             movementSpeed += increaseSpeedBy;
-            msm.IncreaseSpeedBy(1 + (CamSpeedIncreaseInPercent * 0.01f));
+            msm.IncreaseSpeedBy(1 + ((CamSpeedIncreaseInPercent * 0.01f)*0.5f));
             yield return new WaitForSeconds(EverySeconds[curSpeed]);
             if(curSpeed < EverySeconds.Length-1)
                 curSpeed++;
