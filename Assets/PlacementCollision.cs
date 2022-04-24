@@ -19,13 +19,13 @@ public class PlacementCollision : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
         collisions++;
         Debug.Log("Collisions: " + collisions);
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
         if (collisions > 0)
         {
