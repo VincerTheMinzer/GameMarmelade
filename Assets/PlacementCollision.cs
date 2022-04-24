@@ -22,7 +22,7 @@ public class PlacementCollision : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         collisions++;
-        Debug.Log("Collisions: " + collisions);
+        //Debug.Log("Collisions: " + collisions);
     }
 
     private void OnTriggerExit(Collider other)
