@@ -31,8 +31,8 @@ public class SpawnObjects : MonoBehaviour
         Vector3 myPlacableStartpos = preBuiltObstacles[bla].transform.GetChild(0).localPosition;
         Vector3 myPlacableEndpos = preBuiltObstacles[bla].transform.GetChild(1).localPosition;
         float mydistance = Vector3.Distance(myPlacableStartpos, myPlacableEndpos);
-        Vector3 leftMost = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height / 2, -Camera.main.transform.position.z)) + new Vector3(mydistance / 2, 0, 0) * preBuiltObstacles[bla].transform.localScale.x;
-
+        Vector3 leftMost = Camera.main.ScreenToWorldPoint(new Vector3(0, Screen.height / 2, -Camera.main.transform.position.z)) + new Vector3(mydistance / 2, 0, 0);
+        Debug.Log("LEFTMOST: " + leftMost);
         cm.SwitchIsActive();
 
         while (stuff)
@@ -42,7 +42,7 @@ public class SpawnObjects : MonoBehaviour
             myPlacableStartpos = preBuiltObstacles[bla].transform.GetChild(0).localPosition;
             myPlacableEndpos = preBuiltObstacles[bla].transform.GetChild(1).localPosition;
             mydistance = Vector3.Distance(myPlacableStartpos, myPlacableEndpos);
-            leftMost.x += mydistance * preBuiltObstacles[bla].transform.localScale.x;
+            leftMost.x += mydistance;
             yield return new WaitForSeconds(0.2f);
             
             if (!isInFrustum(useMeLaterDaddy))
@@ -84,6 +84,7 @@ public class SpawnObjects : MonoBehaviour
             return;
 
         //spawn new if currently rightmost obstacle is just out of frame
+        if(!curRightMostObject) { Debug.Log("Outside of screen boi");  return; }
         Vector3 viewport = Camera.main.WorldToViewportPoint(curRightMostObject.transform.GetChild(0).position);
         bool inCameraFrustum = Is01(viewport.x) && Is01(viewport.y);
         bool inFrontOfCamera = viewport.z > 0;
@@ -94,7 +95,7 @@ public class SpawnObjects : MonoBehaviour
             Vector3 myPlacableStartpos = preBuiltObstacles[bla].transform.GetChild(0).localPosition;
             Vector3 myPlacableEndpos = preBuiltObstacles[bla].transform.GetChild(1).localPosition;
             float mydistance = Vector3.Distance(myPlacableStartpos, myPlacableEndpos);
-            Vector3 rightMost = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height / 2, -Camera.main.transform.position.z)) + new Vector3(mydistance/2, 0, 0)*curRightMostObject.transform.localScale.x;
+            Vector3 rightMost = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height / 2, -Camera.main.transform.position.z)) + new Vector3(mydistance/2, 0, 0);
             SpawnPiece(bla, rightMost);
         }
 

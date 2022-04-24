@@ -7,6 +7,8 @@ public class MySpecialMovement : MonoBehaviour
     public GameObject MyCameraGO;
     public Transform MyCameraTrans;
 
+    public GameObject Respawn;
+
     //[SerializeField] private Animator _anim;
 
     //MOVEMENT
@@ -33,6 +35,15 @@ public class MySpecialMovement : MonoBehaviour
 
         //Debug.Log(_inputs.X + ", " + _rb.velocity + ", " + IsGrounded);
     }
+
+    public void die()
+    {
+        GameObject myres = Instantiate(Respawn, Camera.main.transform);
+        transform.position = myres.transform.GetChild(0).position;
+        myres.transform.parent = null;
+    }
+
+    
 
     #region Movement
 
