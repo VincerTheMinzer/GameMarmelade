@@ -7,7 +7,7 @@ public class Placeable : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //transform.GetChild(0).GetComponent<ParticleSystem>() = GetComponent<Mesh>();
     }
 
     // Update is called once per frame

@@ -32,7 +32,8 @@ public class ObjectPlacement : MonoBehaviour
     // placeable displayed in the Preview
     private GameObject nextPlaceable;
 
-
+    private bool IsNextPlatform = true;
+    private bool IsCurrentPlatform = true;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +68,9 @@ public class ObjectPlacement : MonoBehaviour
                 // detach currentPlaceable from Cursor and trigger effects
                 currentPlaceable.transform.parent = null;
                 currentPlaceable.layer = 0;
+                if (IsCurrentPlatform) {
+                    currentPlaceable.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
+                }
                 currentPlaceable.transform.GetChild(0).GetComponent<Placeable>().Place();
 
                 // attach nextPlaceable to Cursor
@@ -104,9 +108,11 @@ public class ObjectPlacement : MonoBehaviour
         if (spawnItem <= ItemRate)
         {
             collection = items;
+            IsNextPlatform = false;
         }
         else {
             collection = placeables;
+            IsNextPlatform = true;
         }
         
         int id = Random.Range(0, collection.Count);
