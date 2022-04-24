@@ -15,6 +15,7 @@ public class ObjectPlacement : MonoBehaviour
     public float PreviewScale;
     public Transform PreviewTransform;
 
+    public float PlacedItemScale = 1f;
 
     [Header("Audio")]
     public List<AudioClip> insults;
@@ -22,7 +23,7 @@ public class ObjectPlacement : MonoBehaviour
     public float InsultRate;
     public AudioClip warning;
 
-
+    public GameObject PreviewBackground;
 
 
 
@@ -39,6 +40,7 @@ public class ObjectPlacement : MonoBehaviour
         // initiate currentPlaceable
         int id = Random.Range(0, placeables.Count);
         currentPlaceable = Instantiate(placeables[id], transform);
+        currentPlaceable.transform.localScale = new Vector3(PlacedItemScale, PlacedItemScale, PlacedItemScale);
         currentPlaceable.layer = 5;
         
         // initiate nextPlaceable
@@ -69,7 +71,8 @@ public class ObjectPlacement : MonoBehaviour
 
                 // attach nextPlaceable to Cursor
                 currentPlaceable = nextPlaceable;
-                currentPlaceable.transform.localScale = new Vector3(1, 1, 1);
+                currentPlaceable.transform.parent = null;
+                currentPlaceable.transform.localScale = new Vector3(PlacedItemScale, PlacedItemScale, PlacedItemScale);
                 currentPlaceable.transform.position = transform.position;
                 currentPlaceable.transform.parent = transform;
 
@@ -115,7 +118,7 @@ public class ObjectPlacement : MonoBehaviour
         placeable.layer = 5;
         placeable.transform.localScale *= PreviewScale;
         placeable.transform.position = PreviewTransform.position;
-        placeable.transform.parent = Camera.main.transform;
+        placeable.transform.parent = PreviewBackground.transform;
         
         return placeable;
     }
