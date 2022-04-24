@@ -11,7 +11,16 @@ public class MySpecialMovement : MonoBehaviour
 
     //MOVEMENT
     [Header("Movement Variables")]
-    
+
+    [SerializeField] float _MovingTurnSpeed = 360;
+    [SerializeField] float _StationaryTurnSpeed = 180;
+
+    float _CapsuleHeight;
+    Vector3 _CapsuleCenter;
+    CapsuleCollider _Capsule;
+
+    Vector3 _GroundNormal;
+
 
     // ----------
     private FrameInputs _inputs;
@@ -19,19 +28,41 @@ public class MySpecialMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _Animator = GetComponent<Animator>();
+
+        _Capsule = GetComponent<CapsuleCollider>();
+        _CapsuleHeight = _Capsule.height;
+        _CapsuleCenter = _Capsule.center;
+
         _rb = GetComponent<Rigidbody>();
+        _rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        var move = _rb.velocity;
+        //Debug.Log(_inputs.X + ", " + _rb.velocity + ", " + IsGrounded);
+        if (move.magnitude > 1f) move.Normalize();
+        move = transform.InverseTransformDirection(move);
+
         HandleGrounding();
+
+        move = Vector3.ProjectOnPlane(move, _GroundNormal);
+        _TurnAmount = Mathf.Atan2(move.x, move.z);
+        _ForwardAmount = move.z;
+
+        ApplyExtraTurnRotation();
 
         HandleWalking();
 
         HandleJumping();
 
-        //Debug.Log(_inputs.X + ", " + _rb.velocity + ", " + IsGrounded);
+        ScaleCapsuleForCrouching(Input.GetKey(KeyCode.S));
+        PreventStandingInLowHeadroom();
+
+        UpdateAnimator(move);
     }
 
     #region Movement
@@ -62,18 +93,20 @@ public class MySpecialMovement : MonoBehaviour
             _hasJumped = false;
             _currentMovementLerpSpeed = 100;
             OnTouchedGround?.Invoke();
+            _Animator.applyRootMotion = true;
         }
         else if (IsGrounded && !grounded)
         {
             //Debug.Log("Not Grounded");
             IsGrounded = false;
             transform.SetParent(null);
+            _Animator.applyRootMotion = false;
         }
     }
 
     #endregion
 
-    #region Jumping
+    #region Walking
 
     [Header("Walking")] [SerializeField] private float _walkSpeed = 4;
     [SerializeField] private float _acceleration = 2;
@@ -127,7 +160,12 @@ public class MySpecialMovement : MonoBehaviour
             if (IsGrounded || _enableDoubleJump && !_hasDoubleJumped)
             {
                 //Debug.Log("Has Jumped: " + _hasJumped + "Has Double Jumped" + _hasDoubleJumped);
-                if (!_hasJumped || _hasJumped && !_hasDoubleJumped) ExecuteJump(new Vector2(_rb.velocity.x, _jumpForce), _hasJumped); // Ground jump
+                if (!_hasJumped || _hasJumped && !_hasDoubleJumped)
+                {
+                    ExecuteJump(new Vector2(_rb.velocity.x, _jumpForce), _hasJumped); // Ground jump
+                    _Animator.applyRootMotion = false;
+                }
+                   
             }
         }
 
@@ -153,4 +191,100 @@ public class MySpecialMovement : MonoBehaviour
     }
 
     #endregion
+
+    #region Animator
+    Animator _Animator;
+
+    [SerializeField] float _RunCycleLegOffset = 0.2f;
+    [SerializeField] float _AnimSpeedMultiplier = 1f;
+
+    const float k_Half = 0.5f;
+    float _TurnAmount;
+    float _ForwardAmount;
+    bool _Crouching;
+
+    void UpdateAnimator(Vector3 move)
+    {
+        // update the animator parameters
+        _Animator.SetFloat("Forward", _ForwardAmount, 0.1f, Time.deltaTime);
+        _Animator.SetFloat("Turn", _TurnAmount, 0.1f, Time.deltaTime);
+        _Animator.SetBool("Crouch", _Crouching);
+        _Animator.SetBool("OnGround", IsGrounded);
+        if (!IsGrounded)
+        {
+            _Animator.SetFloat("Jump", _rb.velocity.y);
+        }
+
+        // calculate which leg is behind, so as to leave that leg trailing in the jump animation
+        // (This code is reliant on the specific run cycle offset in our animations,
+        // and assumes one leg passes the other at the normalized clip times of 0.0 and 0.5)
+        float runCycle =
+            Mathf.Repeat(
+                _Animator.GetCurrentAnimatorStateInfo(0).normalizedTime + _RunCycleLegOffset, 1);
+        float jumpLeg = (runCycle < k_Half ? 1 : -1) * _ForwardAmount;
+        if (IsGrounded)
+        {
+            _Animator.SetFloat("JumpLeg", jumpLeg);
+        }
+
+        // the anim speed multiplier allows the overall speed of walking/running to be tweaked in the inspector,
+        // which affects the movement speed because of the root motion.
+        if (IsGrounded && move.magnitude > 0)
+        {
+            _Animator.speed = _AnimSpeedMultiplier;
+        }
+        else
+        {
+            // don't use that while airborne
+            _Animator.speed = 1;
+        }
+    }
+    #endregion
+
+    #region Crouching
+    void ScaleCapsuleForCrouching(bool crouch)
+    {
+        if (IsGrounded && crouch)
+        {
+            if (_Crouching) return;
+            _Capsule.height = _Capsule.height / 2f;
+            _Capsule.center = _Capsule.center / 2f;
+            _Crouching = true;
+        }
+        else
+        {
+            Ray crouchRay = new Ray(_rb.position + Vector3.up * _Capsule.radius * k_Half, Vector3.up);
+            float crouchRayLength = _CapsuleHeight - _Capsule.radius * k_Half;
+            if (Physics.SphereCast(crouchRay, _Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+            {
+                _Crouching = true;
+                return;
+            }
+            _Capsule.height = _CapsuleHeight;
+            _Capsule.center = _CapsuleCenter;
+            _Crouching = false;
+        }
+    }
+
+    void PreventStandingInLowHeadroom()
+    {
+        // prevent standing up in crouch-only zones
+        if (!_Crouching)
+        {
+            Ray crouchRay = new Ray(_rb.position + Vector3.up * _Capsule.radius * k_Half, Vector3.up);
+            float crouchRayLength = _CapsuleHeight - _Capsule.radius * k_Half;
+            if (Physics.SphereCast(crouchRay, _Capsule.radius * k_Half, crouchRayLength, Physics.AllLayers, QueryTriggerInteraction.Ignore))
+            {
+                _Crouching = true;
+            }
+        }
+    }
+    #endregion
+
+    void ApplyExtraTurnRotation()
+    {
+        // help the character turn faster (this is in addition to root rotation in the animation)
+        float turnSpeed = Mathf.Lerp(_StationaryTurnSpeed, _MovingTurnSpeed, _ForwardAmount);
+        transform.Rotate(0, _TurnAmount * turnSpeed * Time.deltaTime, 0);
+    }
 }
