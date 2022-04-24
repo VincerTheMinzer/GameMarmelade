@@ -6,7 +6,7 @@ public class MySpecialMovement : MonoBehaviour
     private Rigidbody _rb;
     public GameObject MyCameraGO;
     public Transform MyCameraTrans;
-
+    public float PlayerHeight = 2;
     public GameObject Respawn;
 
     //[SerializeField] private Animator _anim;
@@ -22,6 +22,9 @@ public class MySpecialMovement : MonoBehaviour
     CapsuleCollider _Capsule;
 
     Vector3 _GroundNormal;
+
+    public Transform Knee;
+    public Transform Chest;
 
 
     // ----------
@@ -67,13 +70,33 @@ public class MySpecialMovement : MonoBehaviour
         UpdateAnimator(move);
     }
 
+    private bool isClimbing = false;
+    private void OnTriggerEnter(Collider other)
+    {
+        DoDaClimb();
+    }
+
+    public void DoDaClimb()
+    {
+        Debug.Log("CLIMB BITCH CLIMB");
+        isClimbing = true;
+        Vector3 climb = (transform.up*8 + transform.right)*2;
+        _rb.velocity = Vector3.MoveTowards(_rb.velocity, climb, 50);
+        //Vector3 daPos = transform.position;
+        //daPos.y += PlayerHeight;
+        //transform.position = daPos;
+    }
+
+
     public void IncreaseSpeedBy(float spd)
     {
-        _walkSpeed += spd;
+        _walkSpeed *= spd * 0.5f;
+        _acceleration *= spd * 0.5f;
     }
 
     public void die()
     {
+        GetComponent<Health>().DamagePlayer(100);
         GameObject myres = Instantiate(Respawn, Camera.main.transform);
         transform.position = myres.transform.GetChild(0).position;
         myres.transform.parent = null;
@@ -106,6 +129,10 @@ public class MySpecialMovement : MonoBehaviour
             //Debug.Log("Grounded");
 
             IsGrounded = true;
+
+            if (isClimbing)
+                isClimbing = false;
+
             _hasJumped = false;
             _currentMovementLerpSpeed = 100;
             OnTouchedGround?.Invoke();

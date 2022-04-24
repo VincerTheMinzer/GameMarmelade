@@ -32,7 +32,8 @@ public class ObjectPlacement : MonoBehaviour
     // placeable displayed in the Preview
     private GameObject nextPlaceable;
 
-
+    private bool IsNextPlatform = true;
+    private bool IsCurrentPlatform = true;
 
     // Start is called before the first frame update
     void Start()
@@ -62,12 +63,15 @@ public class ObjectPlacement : MonoBehaviour
         {
             Debug.Log("Pressed left click.");
 
-            if (currentPlaceable.GetComponent<PlacementCollision>().collisions == 0)
+            if (currentPlaceable.transform.GetChild(0).GetComponent<PlacementCollision>().collisions == 0)
             {
                 // detach currentPlaceable from Cursor and trigger effects
                 currentPlaceable.transform.parent = null;
                 currentPlaceable.layer = 0;
-                currentPlaceable.GetComponent<Placeable>().Place();
+                if (IsCurrentPlatform) {
+                    currentPlaceable.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
+                }
+                currentPlaceable.transform.GetChild(0).GetComponent<Placeable>().Place();
 
                 // attach nextPlaceable to Cursor
                 currentPlaceable = nextPlaceable;
@@ -79,7 +83,7 @@ public class ObjectPlacement : MonoBehaviour
                 nextPlaceable = GenerateNextPlaceable();
             }
             else {
-                Debug.Log("Ihr könnt das nicht dort platzieren, Mylord");
+                Debug.Log("Ihr kï¿½nnt das nicht dort platzieren, Mylord");
 
                 AudioSource audioData = GetComponent<AudioSource>();
                 float selectPlaylist = Random.Range(0f, 1f);
@@ -104,16 +108,18 @@ public class ObjectPlacement : MonoBehaviour
         if (spawnItem <= ItemRate)
         {
             collection = items;
+            IsNextPlatform = false;
         }
         else {
             collection = placeables;
+            IsNextPlatform = true;
         }
         
         int id = Random.Range(0, collection.Count);
         GameObject placeable = Instantiate(collection[id]);
         
-        Color color = new Color(Random.Range(0F, 1F), Random.Range(0, 1F), Random.Range(0, 1F));
-        placeable.GetComponent<Renderer>().material.color = color;
+        //Color color = new Color(Random.Range(0F, 1F), Random.Range(0, 1F), Random.Range(0, 1F));
+        //placeable.GetComponent<Renderer>().material.color = color;
         
         placeable.layer = 5;
         placeable.transform.localScale *= PreviewScale;
