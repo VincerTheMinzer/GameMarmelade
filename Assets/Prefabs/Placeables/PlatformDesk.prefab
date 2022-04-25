@@ -30,10 +30,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 782800610091612025}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.5, y: -2, z: -1.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.75, y: -1, z: -0.75}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
-  - {fileID: 1192254695012495169}
+  - {fileID: 299674718536683222}
   - {fileID: 782800610092100443}
   m_Father: {fileID: 2591360909058372730}
   m_RootOrder: 0
@@ -249,13 +249,13 @@ Transform:
   m_GameObject: {fileID: 7866550487324929717}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 782800610092100441}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &6289028847326702796
+--- !u!1001 &4892047945431387483
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -310,14 +310,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlacementParticles
       objectReference: {fileID: 0}
-    - target: {fileID: 5173689560522376178, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
-      propertyPath: ShapeModule.m_Mesh
-      value: 
-      objectReference: {fileID: 4300000, guid: 4c9368f3b4904444f8332b1a93f3cd1f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
---- !u!4 &1192254695012495169 stripped
+--- !u!4 &299674718536683222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5173689560522376077, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
-  m_PrefabInstance: {fileID: 6289028847326702796}
+  m_PrefabInstance: {fileID: 4892047945431387483}
   m_PrefabAsset: {fileID: 0}
