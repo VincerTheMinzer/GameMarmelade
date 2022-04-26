@@ -73,7 +73,9 @@ public class MySpecialMovement : MonoBehaviour
     private bool isClimbing = false;
     private void OnTriggerEnter(Collider other)
     {
-        DoDaClimb();
+        if (!IsGrounded) {
+            DoDaClimb();
+        }
     }
 
     public void DoDaClimb()

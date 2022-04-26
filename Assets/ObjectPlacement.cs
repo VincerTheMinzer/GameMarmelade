@@ -42,7 +42,7 @@ public class ObjectPlacement : MonoBehaviour
         int id = Random.Range(0, placeables.Count);
         currentPlaceable = Instantiate(placeables[id], transform);
         currentPlaceable.transform.localScale = new Vector3(PlacedItemScale, PlacedItemScale, PlacedItemScale);
-        currentPlaceable.layer = 5;
+        currentPlaceable.transform.GetChild(0).gameObject.layer = 5;
         
         // initiate nextPlaceable
         id = Random.Range(0, placeables.Count);
@@ -67,9 +67,14 @@ public class ObjectPlacement : MonoBehaviour
             {
                 // detach currentPlaceable from Cursor and trigger effects
                 currentPlaceable.transform.parent = null;
-                currentPlaceable.layer = 0;
+                currentPlaceable.transform.GetChild(0).gameObject.layer = 0;
+                Debug.Log("Layer: " + currentPlaceable.layer);
                 if (IsCurrentPlatform) {
-                    currentPlaceable.transform.GetChild(0).GetComponent<MeshCollider>().isTrigger = false;
+                    Collider[] colliders = currentPlaceable.transform.GetChild(0).GetComponents<Collider>();
+                    for (int i = 0; i < colliders.Length; i++)
+                    {
+                        colliders[i].isTrigger = false;
+                    }
                 }
                 currentPlaceable.transform.GetChild(0).GetComponent<Placeable>().Place();
 
@@ -121,7 +126,7 @@ public class ObjectPlacement : MonoBehaviour
         //Color color = new Color(Random.Range(0F, 1F), Random.Range(0, 1F), Random.Range(0, 1F));
         //placeable.GetComponent<Renderer>().material.color = color;
         
-        placeable.layer = 5;
+        placeable.transform.GetChild(0).gameObject.layer = 5;
         placeable.transform.localScale *= PreviewScale;
         placeable.transform.position = PreviewTransform.position;
         placeable.transform.parent = PreviewBackground.transform;

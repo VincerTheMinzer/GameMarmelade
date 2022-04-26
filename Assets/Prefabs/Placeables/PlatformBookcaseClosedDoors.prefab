@@ -393,6 +393,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlacementParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 5173689560522376176, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6850ff1e75c0384392b455785cc6444, type: 3}
 --- !u!4 &237986102395872007 stripped
