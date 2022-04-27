@@ -73,7 +73,7 @@ public class MySpecialMovement : MonoBehaviour
     private bool isClimbing = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (!IsGrounded) {
+        if (!IsGrounded && !other.isTrigger && _rb.velocity.y > 0 && !isClimbing) {
             DoDaClimb();
         }
     }
@@ -82,7 +82,7 @@ public class MySpecialMovement : MonoBehaviour
     {
         Debug.Log("CLIMB BITCH CLIMB");
         isClimbing = true;
-        Vector3 climb = (transform.up*8 + transform.right)*2;
+        Vector3 climb = (transform.up*8 /* + transform.right*/)*2;
         _rb.velocity = Vector3.MoveTowards(_rb.velocity, climb, 50);
         //Vector3 daPos = transform.position;
         //daPos.y += PlayerHeight;
@@ -122,13 +122,13 @@ public class MySpecialMovement : MonoBehaviour
     {
         RaycastHit hitInfo;
         // Grounder
-        //Debug.DrawLine(Foot.position + (Vector3.up * 0.1f), Foot.position + (Vector3.up * 0.1f) + (Vector3.down * _groundCheckDistance));
+        Debug.DrawLine(Foot.position + (Vector3.up * 0.1f), Foot.position + (Vector3.up * 0.1f) + (Vector3.down * _groundCheckDistance));
         bool grounded = Physics.Raycast(Foot.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, _groundCheckDistance);
 
 
         if (!IsGrounded && grounded)
         {
-            //Debug.Log("Grounded");
+            Debug.Log("Grounded");
 
             IsGrounded = true;
 
@@ -223,8 +223,11 @@ public class MySpecialMovement : MonoBehaviour
         }
 
         // Fall faster and allow small jumps. _jumpVelocityFalloff is the point at which we start adding extra gravity. Using 0 causes floating
-        if (_rb.velocity.y < _jumpVelocityFalloff || _rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        if (_rb.velocity.y < _jumpVelocityFalloff || _rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space)) {
             _rb.velocity += _fallMultiplier * Physics.gravity.y * Vector3.up * Time.deltaTime;
+        }
+        Debug.Log("Jump Vector: " + _rb.velocity);
+            
     }
     
     #endregion

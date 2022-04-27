@@ -15,9 +15,6 @@ public class SpawnObjects : MonoBehaviour
     [Range(0, 1)]
     public float maxPercentOfMissingTiles = 0.5f;
 
-    [Range(0, 1)]
-    public float chanceThatCosmeticsAreMissing = 0.3f;
-
     private List<GameObject> instantiatedObjects;
     public GameObject curRightMostObject;
 
@@ -113,7 +110,7 @@ public class SpawnObjects : MonoBehaviour
         {
             Debug.Log("nope");
         }
-        
+
         noiseOffsetX += noiseStepSize;
         return curRightMostObject;
     }
